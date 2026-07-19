@@ -1,0 +1,13 @@
+# Data and generated outputs are intentionally excluded from this code-only archive.
+*.nc
+*.npz
+*.csv
+*.parquet
+*.png
+*.pdf
+*.svg
+outputs/
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
