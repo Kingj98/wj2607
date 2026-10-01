@@ -1,11 +1,16 @@
 # Cross-Scale Diagnostics
 
-Numerical kernels for the direct one-dimensional transfer spectrum,
-shell-to-shell transfer, and subfilter-scale flux diagnostics used in the
-manuscript. The repository excludes observational data, local paths, figures,
-and generated outputs.
+Core numerical routines used for the cross-scale energy-transfer analysis in
+the manuscript. The repository includes:
 
-## Verify
+- the direct one-dimensional transfer spectrum and cumulative flux;
+- shell-to-shell transfer and the local/nonlocal decomposition;
+- along-swath and two-dimensional disk-filter subfilter-scale flux.
+
+Observational data are available from the original data providers and are not
+redistributed here.
+
+## Setup and tests
 
 ```powershell
 python -m venv .venv
@@ -15,7 +20,7 @@ $env:PYTHONPATH = (Join-Path (Get-Location) 'src')
 pytest tests -q
 ```
 
-## Use
+## Main functions
 
 ```python
 from transfer import transfer_spectrum_T1, tail_integral_from_tk
@@ -23,19 +28,7 @@ from shell import shell_to_shell_matrix, antisymmetric_transfer, cumulative_shel
 from sfs import compute_pi_field_1d_along, compute_pi_field_2d
 ```
 
-All arrays are supplied by the caller. `spacing_m` is in metres; `dx_km` and
-`dy_km` are in kilometres. `Pi_l > 0` denotes downscale transfer.
-
-## Manuscript map
-
-- Direct transfer spectrum and its cumulative tail: `transfer_spectrum_T1` and
-  `tail_integral_from_tk` in `src/transfer.py`.
-- Shell-to-shell transfer, antisymmetric exchange matrix, and factor-of-two
-  local/nonlocal cumulative flux: `shell_to_shell_matrix`,
-  `antisymmetric_transfer`, and `cumulative_shell_flux` in `src/shell.py`.
-- One-dimensional along-track and two-dimensional disk-filter SFS flux:
-  `compute_pi_field_1d_along` and `compute_pi_field_2d` in `src/sfs.py`.
-
-For shell matrices, rows are receiver shells and columns are donor shells;
-positive values denote positive energy input to the receiver. For SFS flux,
-`Pi_l > 0` denotes downscale transfer.
+Inputs are supplied as arrays. `spacing_m` is in metres, while `dx_km` and
+`dy_km` are in kilometres. In the shell-transfer matrix, rows are receiver
+shells and columns are donor shells. For subfilter-scale flux, `Pi_l > 0`
+denotes downscale transfer.
